@@ -19,8 +19,9 @@ jobs:
           sudo apt-get install gnupg
       - name: Decrypt ground truth file
         env:
-          credentials: ${{ secrets.PA3_PASSWORD }}
-        run: gpg --quiet --batch --yes --decrypt --passphrase=$credentials --output ground_truth.tsv ground_truth_encrypted.tsv
+          PA3_PASSWORD: ${{ secrets.PA3_PASSWORD }}
+        run: |
+          echo "${{ secrets.PA3_PASSWORD }}" | gpg --quiet --batch --yes --decrypt --passphrase-fd 0 --output ground_truth.tsv ground_truth_encrypted.tsv
       - name: Install Python dependencies
         run: "pip install -r requirements.txt"
       - name: Evaluate predictions and post score
