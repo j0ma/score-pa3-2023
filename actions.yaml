@@ -1,0 +1,24 @@
+name: Evaluate Predictions
+
+on:
+  pull_request:
+    types: [opened, edited, reopened]
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Install GnuPG
+      run: |
+        sudo apt-get update
+        sudo apt-get install gnupg
+    - name: Decrypt ground truth file
+      run: "gpg --quiet --batch --yes --decrypt --passphrase=\"${{ secrets.PA3_PASSWORD }}\" --output ground_truth.tsv ground_truth_encrypted.tsv"
+    - name: Install Python dependencies
+      run: "pip install -r requirements.txt"
+    - name: Evaluate predictions and post score
+      run: "python evaluate.py predictions.tsv ground_truth.tsv"
+    - name: Remove all TSVs
+      run: "rm *.tsv"
