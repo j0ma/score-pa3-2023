@@ -26,6 +26,7 @@ jobs:
       - name: Echo sth random
         run: echo "$FOO" "$PUBLIC_REPO_VARIABLE"
       - name: Decrypt ground truth file
+        secrets: inherit
         run: |
           echo "${{ secrets.PA3_PASSWORD }}" | gpg --quiet --batch --yes --decrypt --passphrase-fd 0 --output ground_truth.tsv ground_truth_encrypted.tsv
       - name: Install Python dependencies
