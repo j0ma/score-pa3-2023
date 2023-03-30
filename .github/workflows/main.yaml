@@ -21,6 +21,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install gnupg
+      - name: print environment
+        run: printenv
       - name: Echo sth random
         run: echo "$FOO" "$PUBLIC_REPO_VARIABLE"
       - name: Decrypt ground truth file
