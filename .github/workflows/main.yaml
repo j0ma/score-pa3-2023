@@ -6,6 +6,7 @@ on:
 
 env:
   PA3_PASSWORD: ${{ secrets.PA3_PASSWORD }}
+  FOO: ${{ secrets.FOO}}
 
 jobs:
   evaluate:
@@ -20,6 +21,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install gnupg
+      - name: Echo sth random
+        run: echo "$FOO"
       - name: Decrypt ground truth file
         run: |
           echo "${{ secrets.PA3_PASSWORD }}" | gpg --quiet --batch --yes --decrypt --passphrase-fd 0 --output ground_truth.tsv ground_truth_encrypted.tsv
