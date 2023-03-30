@@ -11,19 +11,19 @@ jobs:
       matrix:
         node-version: [16.x]
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Install GnuPG
-      run: |
-        sudo apt-get update
-        sudo apt-get install gnupg
-    - name: Decrypt ground truth file
-      env:
-        credentials: ${{ secrets.PA3_PASSWORD }}
-      run: gpg --quiet --batch --yes --decrypt --passphrase=$credentials --output ground_truth.tsv ground_truth_encrypted.tsv
-    - name: Install Python dependencies
-      run: "pip install -r requirements.txt"
-    - name: Evaluate predictions and post score
-      run: "python evaluate.py predictions.tsv ground_truth.tsv"
-    - name: Remove all TSVs
-      run: "rm ground_truth.tsv"
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install GnuPG
+        run: |
+          sudo apt-get update
+          sudo apt-get install gnupg
+      - name: Decrypt ground truth file
+        env:
+          credentials: ${{ secrets.PA3_PASSWORD }}
+        run: gpg --quiet --batch --yes --decrypt --passphrase=$credentials --output ground_truth.tsv ground_truth_encrypted.tsv
+      - name: Install Python dependencies
+        run: "pip install -r requirements.txt"
+      - name: Evaluate predictions and post score
+        run: "python evaluate.py predictions.tsv ground_truth.tsv"
+      - name: Remove all TSVs
+        run: "rm ground_truth.tsv"
