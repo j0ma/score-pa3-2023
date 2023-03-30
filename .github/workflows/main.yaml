@@ -31,6 +31,6 @@ jobs:
       - name: Install Python dependencies
         run: "pip install -r requirements.txt"
       - name: Evaluate predictions and post score
-        run: "python evaluate.py predictions.tsv ground_truth.tsv"
+        run: "ls && python evaluate.py ./predictions.tsv ./ground_truth.tsv"
       - name: Remove all TSVs
         run: "rm ground_truth.tsv"
